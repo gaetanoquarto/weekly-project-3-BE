@@ -1,5 +1,6 @@
 package dao;
 
+
 import entities.Utente;
 import utils.JpaUtil;
 
@@ -20,5 +21,15 @@ public void save(Utente u) {
 		}
 		
 	}
+
+public int getUtenteById(int id) {
+	Utente e = em.find(Utente.class, id);
+	
+	if( e == null ) {
+		System.out.println( "Il numero di tessera " + id + " non esiste!" );
+	}
+	
+	return e.getNumerotessera();
+}
 
 }

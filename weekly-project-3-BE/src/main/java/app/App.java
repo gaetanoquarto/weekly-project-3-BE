@@ -13,6 +13,7 @@ import entities.Rivista;
 import entities.Utente;
 
 public class App {
+
 	
 	public static Libro saveLibro() {
 		Libro l = new Libro();
@@ -54,10 +55,10 @@ public class App {
 	}
 	
 	
-	public static Prestito savePrestito(Utente utente, ElementoBiblioteca elemento) {
+	public static Prestito savePrestito(int utente, String libro) {
 		Prestito p = new Prestito();
-		p.setUtente_id(utente.getNumerotessera());
-		p.setPrestato(elemento.getTitolo());
+		p.setUtente_id(utente);
+		p.setPrestato(libro);
 		p.setInizioprestito(LocalDate.parse("2022-12-25"));
 		p.setRestituzioneprevista(p.getInizioprestito().plusDays(30));
 		p.setRestituzioneeffettiva(null);
@@ -97,7 +98,7 @@ public class App {
 	}
 	public static void searchTessera() {
 		PrestitoDAO prestitoDAO = new PrestitoDAO();
-		prestitoDAO.ricercaByTessera(1);
+		prestitoDAO.ricercaByTessera(3);
 		
 	}
 	public static void searchScaduti() {
@@ -106,24 +107,38 @@ public class App {
 		
 	}
 	
+	public static int getUtente() {
+		UtenteDAO utente = new UtenteDAO();
+		return utente.getUtenteById(3);
+	}
+	public static String getElemento() {
+		ElementoBibliotecaDAO elemento = new ElementoBibliotecaDAO();
+		return elemento.getTitolo(450000000000300L);
+	}
+	
 
 
 	public static void main(String[] args) {
-
-		//Libro libro = saveLibro();
 		
-		//Utente utente = saveUtente();
+		int utente = getUtente();
 		
-		//Rivista rivista = saveRivista();
+		String libro = getElemento();
+		
+		//saveUtente();
+		//saveLibro();
+		
+		//saveUtente();
+		
+		//saveRivista();
 		
 		//searchISBN();
 		//searchAutore();
 		//searchAnno();
 		//searchTitoloParz();
-		searchTessera();
+		//searchTessera();
 		//searchScaduti();
 		
-		//Prestito prestito = savePrestito(utente, libro);
+		Prestito prestito = savePrestito(utente, libro);
 		
 		
 		

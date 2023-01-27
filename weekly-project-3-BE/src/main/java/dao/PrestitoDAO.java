@@ -33,17 +33,28 @@ public void ricercaByTessera(int numeroTessera) {
 		query.setParameter("utente_id", numeroTessera);
 		List<Prestito> prestiti = query.getResultList();
 		System.out.println("Carico elementi non consegnati con il numero tessera: " + numeroTessera);
-		for(Prestito e : prestiti) {
-			System.out.println(e);
+		if(prestiti.isEmpty()) {
+			System.out.println("Nessun elemento trovato!");
+		} else {
+			for(Prestito e : prestiti) {
+				System.out.println(e);
+			}
+			
 		}
+		
 }
 public void ricercaScaduti() {
 	
 	Query query = em.createNamedQuery("ricercaPrestitiScaduti");
 	List<Prestito> prestiti = query.getResultList();
 	System.out.println("Carico elementi non consegnati in tempo: ");
-	for(Prestito e : prestiti) {
-		System.out.println(e);
+	if(prestiti.isEmpty()) {
+		System.out.println("Nessun elemento trovato!");
+	} else {
+		for(Prestito e : prestiti) {
+			System.out.println(e);
+		}
+		
 	}
 }
 

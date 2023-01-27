@@ -6,6 +6,8 @@ import javax.persistence.Query;
 
 import entities.ElementoBiblioteca;
 import entities.Libro;
+import entities.Prestito;
+import entities.Utente;
 import utils.JpaUtil;
 
 
@@ -58,49 +60,64 @@ public void ricercaByISBN(long codiceIsbn) {
 
 public void ricercaByAnno(int anno) {
 	
-	try {
+	
 		Query query = em.createNamedQuery("ricercaAnno");
 		query.setParameter("annoPubblicazione", anno);
 		List<ElementoBiblioteca> elemento = query.getResultList();
 		System.out.println("Carico elementi con l'anno: " + anno);
-		for(ElementoBiblioteca e : elemento) {
-			System.out.println(e);
+		if(elemento.isEmpty()) {
+			System.out.println("Nessun elemento trovato!");
+		} else {
+			for(ElementoBiblioteca e : elemento) {
+				System.out.println(e);
+			}
+			
 		}
-	} catch(Exception e) {
-		System.out.println("Elemento non trovato!");
-	}
+	
 	
 }
 public void ricercaByAutore(String autore) {
 	
-	try {
 		 Query query = em.createNamedQuery("ricercaAutore");
 			query.setParameter("autore", autore);
 			List<Libro> libri = query.getResultList();
 			System.out.println("Carico elementi con l'autore: " + autore);
-			for(ElementoBiblioteca e : libri) {
-				System.out.println(e);
+			if(libri.isEmpty()) {
+				System.out.println("Nessun elemento trovato!");
+			} else {
+				for(Libro e : libri) {
+					System.out.println(e);
+				}
+				
 			}
 		
-	} catch(Exception e) {
-		System.out.println("Elemento non trovato!");
 	}
 	
-}
 
 		public void ricercaParzialeTitolo(String titolo) {
 			
-			try {
 				Query query = em.createNamedQuery("ricercaTitolo");
 				query.setParameter("titolo", "%"+titolo+"%");
 				List<ElementoBiblioteca> elemento = query.getResultList();
 				System.out.println("Carico elementi con il titolo: " + titolo);
-				for(ElementoBiblioteca e : elemento) {
-					System.out.println(e);
+				if(elemento.isEmpty()) {
+					System.out.println("Nessun elemento trovato!");
+				} else {
+					for(ElementoBiblioteca e : elemento) {
+						System.out.println(e);
+					}
+					
 				}
-			} catch(Exception e) {
-				System.out.println("Elemento non trovato!");
 			}
+
+		public String getTitolo(long codiceIsbn) {
+			ElementoBiblioteca e = em.find(ElementoBiblioteca.class, codiceIsbn);
+			
+			if( e == null ) {
+				System.out.println( "Il codice ISBN " + codiceIsbn + " non esiste!" );
+			}
+			return e.getTitolo();
+		} 
 			
 			
 
@@ -111,4 +128,4 @@ public void ricercaByAutore(String autore) {
 
 
 
-}
+
